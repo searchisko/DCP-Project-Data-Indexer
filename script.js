@@ -115,9 +115,7 @@ var processData = function(data) {
 				dataType: 'JSON',
 				processData: false,
 				contentType: 'application/json'
-				// username: '',
-				// password: '',
-				// async:false
+				// ,async:false
 			};
 
 			// setup credentials if provided
@@ -126,6 +124,7 @@ var processData = function(data) {
 			if (username.length > 0 && password.length > 0) {
 				ajaxconf["username"] = username;
 				ajaxconf["password"] = password;
+				ajaxconf["xhrFields"] = { withCredentials: true	};
 			}
 
 			// create deferred chain
