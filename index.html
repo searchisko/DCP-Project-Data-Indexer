@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Project Data Indexer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  </head>
+  <body>
+    <h2>DCP Project Data Indexer</h2>
+    <div>
+      Project Data Source URL <input id="source_url" class="url" type="text" value="http://www.jboss.org/rest/projectData"></input></br>
+      Searchisko REST API URL <input id="target_url" class="url" type="text" value="http://dcp-stg.jboss.org/v1/rest"></input>
+    </div>
+    <h4>Credentials</h4>
+    <div>
+      username <input id="username" type="text" value=""></input></br>
+      password <input id="password" type="password"></input>
+    </div>
+    <div>
+      Note that some web browers do not support CORS from <code>file://</code> protocols. For example Google Chrome, though there is a known command line flag to allow it: <code>--allow-file-access-from-files</code>.
+    </div>
+    <div>
+      <input id="startButton" type="button" value="start" text="start"></input> 
+      <progress id="progressBar" value="0" max="100"></progress>
+    </div>
+    <div>
+      <h4>Logging messages</h4>
+      <ol id="log">
+      </ol>
+    </div>
+    <script src='script.js'></script>
+  </body>
+</html>

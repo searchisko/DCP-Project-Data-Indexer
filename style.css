@@ -1,0 +1,27 @@
+body {
+	vertical-align: center;
+}
+
+div {
+	margin: 10px 0;
+}
+
+input.url {
+	width: 400px;
+}
+
+li {
+	font-size: 65%;
+}
+
+li.info {
+	background-color: lightgreen;
+}
+
+li.debug {
+	color: gray;
+}
+
+li.error {
+	background-color: red;
+}
