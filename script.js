@@ -111,7 +111,7 @@ var processData = function(data) {
 				type: 'POST',
 				//url: na,
 				crossDomain: true,
-				data: JSON.stringify(data),
+				// data: na,
 				dataType: 'JSON',
 				processData: false,
 				contentType: 'application/json'
@@ -133,6 +133,7 @@ var processData = function(data) {
 			$.each(hits, function(i, hit){
 
 				var data = hit._source;
+				ajaxconf["data"] = JSON.stringify(data);
 				ajaxconf["url"] = target_url+"/content/"+data.sys_content_type+"/"+data.sys_content_id;
 
 				dfr.then(
