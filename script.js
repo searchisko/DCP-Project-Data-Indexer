@@ -19,7 +19,7 @@
 /**
  * @fileoverview
  * Data pump to pull data from Magnolia projectData REST end point
- * and push into appropriate DCP REST end point.
+ * and push into specified DCP REST end point.
  *
  * @author lvlcek@redhat.com (Lukas Vlcek)
  */
@@ -84,12 +84,12 @@ $(document).ready(function(){
 				};
 
 				// setup credentials if provided
-				var username = $.trim($("#username").val());
-				var password = $.trim($("#password").val());
-				if (username.length > 0 && password.length > 0) {
+				//var username = $.trim($("#username").val());
+				//var password = $.trim($("#password").val());
+				//if (username.length > 0 && password.length > 0) {
 //					ajaxconf.headers = { Authorization: 'Basic ' + btoa(username + ':' + password) };
-					ajaxconf.xhrFields = { withCredentials: true };
-				}
+//					ajaxconf.xhrFields = { withCredentials: true };
+				//}
 
 				$.each(hits, function(i, hit){
 
@@ -98,13 +98,13 @@ $(document).ready(function(){
 
 					var data = hit._source;
 					conf["data"] = JSON.stringify(data);
-					conf["url"] = target_url+"/content/"+data.sys_content_type+"/"+data.sys_content_id;
+					conf["url"] = [target_url, "/content/", data.sys_content_type, "/", data.sys_content_id].join('');
 
 					dfr.then(
 						function() {
 							return $.ajax(conf)
-								.done( function() { logMessage("[OK] hit ["+(i+1)+"] for ["+data.sys_content_id+"]"); } )
-								.fail( function() { logMessage("[ERROR] hit ["+(i+1)+"] for ["+data.sys_content_id+"]", messageCodes.ERROR); } )
+								.done( function() { logMessage(["[OK] hit [", (i+1), "] for [", data.sys_content_id, "]"].join('')); } )
+								.fail( function() { logMessage(["[ERROR] hit [", (i+1), "] for [", data.sys_content_id, "]"].join(''), messageCodes.ERROR); } )
 								.always( function() { setProgressBar(getProgressBarValue()+1); } );
 						}
 					);
@@ -176,7 +176,7 @@ $(document).ready(function(){
 
 	function logMessage(message, opt_code) {
 		var code = opt_code || messageCodes.INFO;
-		log.append("<li "+code+">"+message+"</li>");
+		log.append(["<li ", code, ">", message, "</li>"].join(''));
 	}
 
 	/**
