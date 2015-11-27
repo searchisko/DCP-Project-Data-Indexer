@@ -88,7 +88,7 @@ $(document).ready(function(){
 				//var password = $.trim($("#password").val());
 				//if (username.length > 0 && password.length > 0) {
 //					ajaxconf.headers = { Authorization: 'Basic ' + btoa(username + ':' + password) };
-//					ajaxconf.xhrFields = { withCredentials: true };
+					ajaxconf.xhrFields = { withCredentials: true };
 				//}
 
 				$.each(hits, function(i, hit){
