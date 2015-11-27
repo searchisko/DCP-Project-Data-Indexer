@@ -6,7 +6,7 @@ Simple ad-hoc tool used as a data pump to pull jboss.org community projects rela
 
 1. Clone git repo: `git clone https://github.com/searchisko/DCP-Project-Data-Indexer.git`;
 2. Open `index.html` in web browser;
-3. Complete the web form - namely URLs and user credentials;
+3. Complete the web form (server URLs);
 4. Hit `start` button and watch the progress;
 
 #### Important
