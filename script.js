@@ -60,10 +60,10 @@ $(document).ready(function(){
 		});
 	}
 
-	function processData(data) {
-		if (data && data.hits && data.hits.hits) {
+	function processData(hits) {
+		if (hits) {
 
-			var hits = data.hits.hits;
+			//var hits = data.hits.hits;
 			var dfr = $.Deferred();
 
 			if (hits.length && hits.length > 0) {
@@ -96,15 +96,16 @@ $(document).ready(function(){
 					var conf = {};
 					$.extend(true, conf, ajaxconf);
 
-					var data = hit._source;
-					conf["data"] = JSON.stringify(data);
-					conf["url"] = [target_url, "/content/", data.sys_content_type, "/", data.sys_content_id].join('');
+					preprocessTheDcpSysFields(hit);
+
+					conf["data"] = JSON.stringify(hit);
+					conf["url"] = [target_url, "/content/", hit.sys_content_type, "/", hit.sys_content_id].join('');
 
 					dfr.then(
 						function() {
 							return $.ajax(conf)
-								.done( function() { logMessage(["[OK] hit [", (i+1), "] for [", data.sys_content_id, "]"].join('')); } )
-								.fail( function() { logMessage(["[ERROR] hit [", (i+1), "] for [", data.sys_content_id, "]"].join(''), messageCodes.ERROR); } )
+								.done( function() { logMessage(["[OK] hit [", (i+1), "] for [", hit.sys_content_id, "]"].join('')); } )
+								.fail( function() { logMessage(["[ERROR] hit [", (i+1), "] for [", hit.sys_content_id, "]"].join(''), messageCodes.ERROR); } )
 								.always( function() { setProgressBar(getProgressBarValue()+1); } );
 						}
 					);
@@ -121,6 +122,18 @@ $(document).ready(function(){
 			resetProgressBar();
 			enableInputElements();
 		}
+	}
+
+	function preprocessTheDcpSysFields( data ) {
+		data.sys_content_id = data.nodePath.substring(1).replace(/\//g,"_");
+		data.sys_content_provider = "jbossorg";
+		data.sys_content_type = "jbossorg_project_info";
+		data.sys_description = data.description;
+		data.sys_id = "jbossorg_project_info-"+data.sys_content_id;
+		data.sys_title = data.projectName;
+		data.sys_type = "project_info";
+		data.sys_updated = new Date().toISOString();
+		data.sys_url_view = data.homePage || data.nodePath || data.downloadsLink || data.docsLink;
 	}
 
 	/**
